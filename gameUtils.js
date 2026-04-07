@@ -17,73 +17,82 @@ const aminoAcids = {
 
 function validate(fieldName, value, el) {
     console.log(fieldName + "  \ " + value, el);
-    const FN = fieldName.toLowerCase();
+    const FN = fieldName;
 
     switch (FN) {
-        case 'username':
+        case 'Username':
             if (value.length < 3) return 'Username must be at least 3 characters.';
             return null;
 
-        case 'password':
+            
+
+        case 'Password':
             if (!/\d/.test(value)) return 'Password must contain at least one number.';
             if (!/[!@#$%^&*(),.?":{}|<>]/.test(value)) return 'Password must contain at least one special character.';
             return null;
 
 
-        case 'birthday':
+        case 'Birthday':
             const month = value.slice(5, 7);
             if (month !== '04') return 'Birthday must be in April :3';
             return null;
 
+            /*** */
+
+            
 
         case "verify email":
+
             if (!/[@]/.test(value)) return 'Email must be valid.';
             return null;
 
+        case "full legal name":
+            if (value != '') return null; // anything goes
 
-        case 'last four digits of ssn':
-            if (value == '6969') return 'Nuhuh.';
-            return null;
 
         case 'terms of affliction':
             if (value == 'false') return 'You must accept the terms of affliction.';
             return null;
 
         case 'publicity policy':
-            if (value == 'false') return 'You must accept the publicity policy. there is no going back now.';
+            if (value == 'false') return 'You must accept the publicity policy. There is no going back now';
             return null;
 
-        case 'pet rock??':
-            if (value == 'false') return 'You must have a pet rock.';
-            return null;
+            /****** */
 
-        case "mother's maiden name":
-            if (value.trim().length === 0) return "Please enter your mother's maiden name.";
-            return null;
 
-        case 'grass touched today':
-            if (isNaN(value) || Number(value) < 1999) return 'Did not touch grass enough. Go do it';
+        case 'last four digits of SSN':
             return null;
 
         case 'forfeit newborn':
-            if (value == 'false') return 'give';
             return null;
 
-        case 'pipe bomb':
-            if (value == 'so cool') return null;
-            return 'security failed: miku is disappointed';
-
-         case 'how many roads does a man walk down':
-            if (value == '42') return null;
-            return 'what is 6 x 9 (this is a reference)';
+        case 'i am a robot':
+            if (value == 'true') return 'really...';
+            return null;
 
         case 'codons of this amino acid':
             if (value === selectedAminoAcid) return null;
-            return 'SURPRISE ORGANIC CHEMISTRY TEST :D';
+            return 'SURPRISE ORGANIC CHEMISTRY TEST !!!';
 
-        case 'first sentence of the bee movie script with punctuation':
-            if (value == 'According to all known laws of aviation, there is no way a bee should be able to fly.' || value == 'According to all known laws of aviation, there is no way that a bee should be able to fly.') return null;
-            return `Just copy paste it lmao I'm sorry`;
+        /*** */
+
+        case 'pipe bomb':
+            if (value == 'so cool') return null;
+            return 'miku';
+
+        case 'pet rock, the original by Gary Dahl':
+            if (value == 'true') return null;
+            return 'yes';
+
+
+        case 'according to all known laws of aviation, can bees fly?':
+            if (value == 'no way' || value == 'no way!' || value=='no') return null;
+            return `no way!`;
+
+        case 'I\'m starting with the':
+            if (value == 'man in the mirror') return null;
+            return `who?`;
 
         default:
             return 'error?';
@@ -92,45 +101,34 @@ function validate(fieldName, value, el) {
 
 
 export const spawn_info = {
+
     "verify email": "textbox",
-    "last four digits of SSN": "number",
+    "full legal name": "textbox",
     "terms of affliction": "checkbox",
     "publicity policy": "checkbox",
 
-    "pet rock??": "checkbox",
-    "mother's maiden name": "textbox",
-    "grass touched today": "number",
-    "forfeit newborn": "checkbox",
 
-    "pipe bomb": "textbox",
-    "first sentence of the bee movie script with punctuation": "textbox",
+    "last four digits of SSN": "number",
+    "forfeit newborn": "checkbox",
+    "i am a robot":"checkbox",
     "codons of this amino acid": "custom",
-    "how many roads does a man walk down": "number",
+
+
+ 
+    "pipe bomb": "textbox",
+    "pet rock, the original by Gary Dahl": "checkbox",
+    "according to all known laws of aviation, can bees fly?": "textbox",
+    "I'm starting with the": "textbox",
+ 
 }
 
-export const SPAWN_ORDER = [
-
-    "verify email",
-    "last four digits of SSN",
-    "terms of affliction",
-    "publicity policy",
-
-    "pet rock??",
-    "mother's maiden name",
-    "grass touched today",
-    "forfeit newborn",
-
-    "pipe bomb",
-    "first sentence of the bee movie script with punctuation",
-    "codons of this amino acid",
-    "how many roads does a man walk down"
-]
+export const SPAWN_ORDER = Object.keys(spawn_info);
 
 
 export function checkThis(fieldName, inputEl) {
 
     console.log("HI");
-    let FN = fieldName.toLowerCase();
+    let FN = fieldName;
     let INPUT = String(inputEl.value);
     if (inputEl.type === 'checkbox') {
         INPUT = String(inputEl.checked);

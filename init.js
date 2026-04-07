@@ -2,6 +2,8 @@
 import * as game from './gameUtils.js';
 import * as main from './index.js';
 
+
+
 export function backgroundText() {
 
     const el = document.querySelector("#my-text");

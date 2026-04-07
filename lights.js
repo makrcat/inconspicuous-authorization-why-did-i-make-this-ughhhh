@@ -1,10 +1,10 @@
 
 import * as main from './index.js';
 const SIZE = 5;
+//@ts-check
 
 
-// 5x5 boolean grid to track light states
-const lightsArray = [
+let lightsArray = [
     [false, false, true, false, true],
     [false, true, false, false, false],
     [true, true, false, false, true],
@@ -12,7 +12,6 @@ const lightsArray = [
     [false, false, false, false, false]
 ]
 
-// Toggle neighbors (up, down, left, right)
 function toggleNeighbors(row, col) {
     const neighbors = [
         [row - 1, col],
@@ -97,13 +96,13 @@ function updateCheckboxes() {
     }
 }
 
+const fieldset = document.getElementsByTagName("fieldset")[0];
+let checkboxes = []
+
 // Main function to create the grid and wire up events
 export function LIGHTS() {
-    const fieldset = document.getElementsByTagName("fieldset")[0];
-    if (!fieldset) return;
 
-
-    const grid = document.createElement('div');
+    let grid = document.createElement('div');
     grid.id = 'lightsOutGrid';
     grid.style.display = 'grid';
 
@@ -145,13 +144,37 @@ export function LIGHTS() {
         });
 
         grid.appendChild(checkbox);
+        checkboxes.push(checkbox)
     }
+
+    const button = document.createElement('button');
+    button.textContent = 'reset';
+    button.addEventListener('click', resetCheckboxes);
+    fieldset.appendChild(button);
 
     fieldset.appendChild(grid);
     updateCheckboxes();
 }
 
+function resetCheckboxes() {
 
+    lightsArray = [
+        [false, false, true, false, true],
+    [false, true, false, false, false],
+    [true, true, false, false, true],
+    [false, false, false, false, false],
+    [false, false, false, false, false]
+    ]
+
+    checkboxes.forEach((checkbox, idx) => {
+        const row = Math.floor(idx / SIZE);
+        const col = idx % SIZE;
+        checkbox.checked = lightsArray[row][col];
+    });
+
+    updateCheckboxes();
+    
+}
 
 
 

@@ -4,16 +4,19 @@ import * as game from './gameUtils.js';
 import * as init from './init.js';
 import * as lights from './lights.js';
 let debug_override = false;
+//@ts-ignore
+window.incrementIndex = incrementIndex
 
 //@ts-ignore
 export const { Engine: ENGINE_INIT, Bodies: BODIES_INIT, World: WORLD_INIT, Mouse: MOUSE_INIT, MouseConstraint } = Matter;
 
+//@ts-ignore
 let baby = null;
 // @ts-ignore
 let fieldset = document.getElementsByTagName('fieldset')[0];
 let fieldsetBg = 'unchanged';
 
-
+//@ts-ignore
 window.engine = ENGINE_INIT.create();
 window.world = window.engine.world;
 
@@ -230,6 +233,33 @@ function noMoreMarbles() {
 
 }
 
+
+function debugTo(targetIndex) {
+    const target = Math.floor(Number(targetIndex));
+    if (!Number.isFinite(target) || target < 0) return;
+
+    debug_override = true;
+
+    document.querySelectorAll('.chaos input').forEach(input => {
+        input.style.backgroundColor = game.green_color;
+    });
+
+    while (nextIndex < target) {
+        const before = nextIndex;
+        MORE();
+        if (nextIndex === before) break;
+    }
+
+    if (nextIndex < target) {
+        nextIndex = target;
+    }
+
+    return nextIndex;
+}
+
+window.debugTo = debugTo;
+
+//@ts-ignore
 
 export function MORE() {
 
